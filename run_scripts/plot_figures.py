@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--max_duration',
                     help="Max duration of trace",
                     required=False,
-                    default=1.2,
+                    default=0.7,
                     dest="max_duration")
 
 
@@ -60,7 +60,7 @@ plt.scatter(timestamps_ack_division, seqnos_ack_division, label="Ack division", 
 plt.title("TCP Daytona: Ack division (figure 4)")
 plt.ylabel("Sequence numbers")
 plt.grid()
-plt.legend()
+plt.legend(loc='upper left')
 plt.xlabel("Time (s)")
 plt.ylim((0,max(seqnos_baseline + seqnos_ack_division)))
 print "Ack division plot saved as %s" % "ack_division_plot.png"
@@ -75,7 +75,7 @@ plt.scatter(timestamps_ack_duplication, seqnos_ack_duplication, label="Ack dupli
 plt.title("TCP Daytona: Ack duplication (figure 5)")
 plt.ylabel("Sequence numbers")
 plt.grid()
-plt.legend()
+plt.legend(loc='upper left')
 plt.xlabel("Time (s)")
 plt.ylim((0,max(seqnos_baseline + seqnos_ack_duplication)))
 print "Ack duplication plot saved as %s" % "ack_duplication_plot.png"
