@@ -13,7 +13,7 @@ import random
 
 
 #Ack division will ack each byte received. This caps the number of acks sent.
-TCP_MAX_ACKS_DIV = 100
+TCP_MAX_ACKS_DIV = 50
 
 #Ack duplication sends each ack multiple times. This controls how many duplicates are sent.
 TCP_NUM_DUP_ACKS = 100
@@ -76,7 +76,7 @@ def run_experiment( output = "sender.dump"):
     sender.cmd('route add default gw %s' % receiver.IP())
 
     #reduce MTU because otherwise the receive window is the limiting factor
-    sender.cmd('ifconfig sender-eth0 mtu 100')
+    sender.cmd('ifconfig sender-eth0 mtu 200')
 
     print "starting transmission of data to %s" % receiver_IP
     sender.sendCmd('python sender.py --receiver=%s &> sender.out' % receiver_IP)
@@ -113,5 +113,5 @@ while(file_len("sender.dump.ack_division") < 150):
 print "Running Ack duplication experiment"
 os.system("cd ../lwip && make clean && make EXTRA_FLAGS='-DTCP_ACK_DUP -DTCP_NUM_DUP_ACKS=%d' && cd ../run_scripts" % TCP_NUM_DUP_ACKS )
 run_experiment("sender.dump.ack_duplication")
-while(file_len("sender.dump.ack_duplication") < 150):
+while(file_len("sender.dump.ack_duplication") < 100):
     run_experiment("sender.dump.ack_duplication")
