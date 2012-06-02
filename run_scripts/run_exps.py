@@ -31,6 +31,12 @@ class MyTopo(Topo):
         sender = self.add_host('sender')
         self.add_link(sender, receiver)
 
+def file_len(filename):
+    with open(filename) as f:
+        for i, l in enumerate(f):
+            pass
+        return i+1
+
 def run_experiment( output = "sender.dump"):
     topo = MyTopo()
     host = custom(CPULimitedHost, cpu = .15)
@@ -70,7 +76,7 @@ def run_experiment( output = "sender.dump"):
     sender.cmd('route add default gw %s' % receiver.IP())
 
     #reduce MTU because otherwise the receive window is the limiting factor
-    sender.cmd('ifconfig sender-eth0 mtu 200')
+    sender.cmd('ifconfig sender-eth0 mtu 100')
 
     print "starting transmission of data to %s" % receiver_IP
     sender.sendCmd('python sender.py --receiver=%s &> sender.out' % receiver_IP)
@@ -93,13 +99,19 @@ def run_experiment( output = "sender.dump"):
 print "Running baseline experiment"
 os.system("cd ../lwip && make clean && make && cd ../run_scripts")
 run_experiment("sender.dump.baseline")
+while(file_len("sender.dump.baseline") < 150):
+    run_experiment("sender.dump.baseline")
 
 #ack division
 print "Running Ack Division experiment"
 os.system("cd ../lwip && make clean && make EXTRA_FLAGS='-DTCP_ACK_DIV -DTCP_MAX_ACKS_DIV=%d' && cd ../run_scripts" % TCP_MAX_ACKS_DIV)
 run_experiment("sender.dump.ack_division")
+while(file_len("sender.dump.ack_division") < 150):
+    run_experiment("sender.dump.ack_division")
 
 #ack duplication
 print "Running Ack duplication experiment"
 os.system("cd ../lwip && make clean && make EXTRA_FLAGS='-DTCP_ACK_DUP -DTCP_NUM_DUP_ACKS=%d' && cd ../run_scripts" % TCP_NUM_DUP_ACKS )
 run_experiment("sender.dump.ack_duplication")
+while(file_len("sender.dump.ack_duplication") < 150):
+    run_experiment("sender.dump.ack_duplication")
