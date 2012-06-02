@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sudo apt-get update
+git clone https://github.com/mininet/mininet.git
+cd mininet
+git checkout class/cs244
+
+#if an exact commit is preferred, use below
+#git checkout 8f310286f80c2885fff582b8f936a437efc3c8d9
+
+cd ..
+sudo mininet/util/install.sh -fnv
