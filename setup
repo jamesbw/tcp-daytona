@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ~
 sudo apt-get update
 git clone https://github.com/mininet/mininet.git
 cd mininet
@@ -10,3 +11,5 @@ git checkout class/cs244
 
 cd ..
 sudo mininet/util/install.sh -fnv
+
+cd tcp-daytona
