@@ -55,13 +55,13 @@ timestamps_ack_duplication, seqnos_ack_duplication = parse_dump("sender.dump.ack
 
 #figure 4
 plt.clf()
-plt.scatter(timestamps_baseline, seqnos_baseline, label="Not misbehaving", color = "blue", alpha = alpha)
-plt.scatter(timestamps_ack_division, seqnos_ack_division, label="Ack division", color= "red", alpha = alpha)
+plt.scatter(timestamps_baseline, seqnos_baseline, marker='^', label="Data Segments (normal)", color = "blue", alpha = alpha)
+plt.scatter(timestamps_ack_division, seqnos_ack_division, marker='s',label="Data Segments", color= "red", alpha = alpha)
 plt.title("TCP Daytona: Ack division (figure 4)")
-plt.ylabel("Sequence numbers")
+plt.ylabel("Sequence numbers (Bytes)")
 plt.grid()
 plt.legend(loc='upper left')
-plt.xlabel("Time (s)")
+plt.xlabel("Time (sec)")
 plt.ylim((0,max(seqnos_baseline + seqnos_ack_division)))
 print "Ack division plot saved as %s" % "ack_division_plot.png"
 plt.savefig("../ack_division_plot.png")
@@ -70,13 +70,13 @@ plt.show()
 
 #figure 5
 plt.clf()
-plt.scatter(timestamps_baseline, seqnos_baseline, label="Not misbehaving", color = "blue", alpha = alpha)
-plt.scatter(timestamps_ack_duplication, seqnos_ack_duplication, label="Ack duplication", color="red", alpha = alpha)
+plt.scatter(timestamps_baseline, seqnos_baseline, marker = '^', label="Data Segments (normal)", color = "blue", alpha = alpha)
+plt.scatter(timestamps_ack_duplication, seqnos_ack_duplication, marker='s',label="Data Segments", color="red", alpha = alpha)
 plt.title("TCP Daytona: Ack duplication (figure 5)")
-plt.ylabel("Sequence numbers")
+plt.ylabel("Sequence numbers (Bytes)")
 plt.grid()
 plt.legend(loc='upper left')
-plt.xlabel("Time (s)")
+plt.xlabel("Time (sec)")
 plt.ylim((0,max(seqnos_baseline + seqnos_ack_duplication)))
 print "Ack duplication plot saved as %s" % "ack_duplication_plot.png"
 plt.savefig("../ack_duplication_plot.png")
